@@ -30,6 +30,34 @@ func TestTryLock(t *testing.T) {
 	mu.Unlock()
 }
 
+func TestTryLockPointer(t *testing.T) {
+	mu := &Mutex{}
+	if !mu.TryLock() {
+		t.Fatal("mutex must be unlocked")
+	}
+	if mu.TryLock() {
+		t.Fatal("mutex must be locked")
+	}
+
+	mu.Unlock()
+	if !mu.TryLock() {
+		t.Fatal("mutex must be unlocked")
+	}
+	if mu.TryLock() {
+		t.Fatal("mutex must be locked")
+	}
+
+	mu.Unlock()
+	mu.Lock()
+	if mu.TryLock() {
+		t.Fatal("mutex must be locked")
+	}
+	if mu.TryLock() {
+		t.Fatal("mutex must be locked")
+	}
+	mu.Unlock()
+}
+
 func TestRace(t *testing.T) {
 	var mu Mutex
 	var x int
