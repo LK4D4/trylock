@@ -23,6 +23,5 @@ func New() *Mutex {
 // TryLock tries to Lock Mutex. It returns true in case of success, false
 // otherwise.
 func (mu *Mutex) TryLock() bool {
-	state := (*int32)(unsafe.Pointer(mu.Mutex))
-	return atomic.CompareAndSwapInt32(state, 0, mutexLocked)
+	return atomic.CompareAndSwapInt32((*int32)(unsafe.Pointer(mu.Mutex)), 0, mutexLocked)
 }
