@@ -16,7 +16,7 @@ type LockedStruct struct {
 
 storage := &LockedStruct{}
 
-if !storage.mu.TryLock() {
+if storage.mu.TryLock() {
 	// do something with storage
 } else {
 	// return busy or use some logic for unavailable storage
