@@ -7,7 +7,7 @@ import (
 )
 
 func Example() {
-	mu := trylock.New()
+	var mu trylock.Mutex
 	fmt.Println(mu.TryLock())
 	fmt.Println(mu.TryLock())
 	mu.Unlock()

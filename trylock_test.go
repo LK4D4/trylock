@@ -3,7 +3,7 @@ package trylock
 import "testing"
 
 func TestTryLock(t *testing.T) {
-	mu := New()
+	var mu Mutex
 	if !mu.TryLock() {
 		t.Fatal("mutex must be unlocked")
 	}
@@ -31,7 +31,7 @@ func TestTryLock(t *testing.T) {
 }
 
 func TestRace(t *testing.T) {
-	mu := New()
+	var mu Mutex
 	var x int
 	for i := 0; i < 1024; i++ {
 		if i%2 == 0 {

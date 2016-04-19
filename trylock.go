@@ -10,14 +10,7 @@ const mutexLocked = 1 << iota
 
 // Mutex is simple sync.Mutex + ability to try to Lock.
 type Mutex struct {
-	in *sync.Mutex
-}
-
-// New returns new Mutex with initialized underlying sync.Mutex.
-func New() *Mutex {
-	return &Mutex{
-		in: &sync.Mutex{},
-	}
+	in sync.Mutex
 }
 
 // Lock locks m.
@@ -39,5 +32,5 @@ func (m *Mutex) Unlock() {
 
 // TryLock tries to lock m. It returns true in case of success, false otherwise.
 func (m *Mutex) TryLock() bool {
-	return atomic.CompareAndSwapInt32((*int32)(unsafe.Pointer(m.in)), 0, mutexLocked)
+	return atomic.CompareAndSwapInt32((*int32)(unsafe.Pointer(&m.in)), 0, mutexLocked)
 }
